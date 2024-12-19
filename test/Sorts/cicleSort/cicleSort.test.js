@@ -101,7 +101,7 @@ describe("CicleSort", () => {
     })
     it("findTheLowestPositive should be possitve always", () => {
         expect(findTheLowestPositive([3,0,-2,1,2])).toBe(4)
-
+        //
         expect(findTheLowestPositive([-1, -7,-8,-3,1,5,4,2])).toBe(3)
         expect(findTheLowestPositive([3,2,5,1])).toBe(4)
     })

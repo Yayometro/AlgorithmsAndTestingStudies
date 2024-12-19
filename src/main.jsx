@@ -1,4 +1,10 @@
 import { createRoot } from "react-dom/client";
-import { Calculator } from "./Calculator";
+import { StrictMode } from "react";
+import App from "./App";
 
-createRoot(document.getElementById("root")).render(<Calculator />);
+createRoot(document.getElementById('root')).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  )
+  

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
+    "dev": "vite",
     "coverage": "vitest run --coverage"
   },
   "keywords": [],
@@ -14,6 +15,7 @@
     "@testing-library/react": "^14.2.1",
     "@vitejs/plugin-react": "^4.2.1",
     "happy-dom": "^13.6.2",
+    "jsdom": "^25.0.1",
     "lodash": "^4.17.21",
     "ramda": "^0.30.1",
     "react": "^18.2.0",
@@ -23,5 +25,9 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslint.json"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.5.2"
   }
 }

@@ -1,14 +1,5 @@
 import { describe, it, expect } from "vitest";
-import _ from "lodash"
-
-
-
-
-
-
-
-
-
+import _ from "lodash";
 
 // Cases:
 // [1,4] [7, 9] [2, 5] ---> [1,5] [7,9]
@@ -27,43 +18,48 @@ import _ from "lodash"
 // And the after this first iteration the stack only has the [7, 9] sub-array
 // Then the process repit itself but in the comparison, the numbers are not matching that means the stack will be empty and the two arrays [1,5] and [7,9] will be pushed in the result array
 
-function mergeArray(arr){
-    if(!Array.isArray(arr)) return "Must be an array"
-    const stack = arr.sort((a, b) => a[0] - b[0])
-    const result = [stack.shift()] // [1,3] // 2da [1,3], [4,6], // 
+function mergeArray(arr) {
+  if (!Array.isArray(arr)) return "Must be an array";
+  const stack = arr.sort((a, b) => a[0] - b[0]);
+  const result = [stack.shift()]; // [1,3] // 2da [1,3], [4,6], //
 
-    while(stack.length >= 1 ){
-        // Hay que ver que tengan numeros en comun
-        // Si los tienen merge
-        // Si no los tienen, se expulsa el sub array ultimo
-        // Deben de estar solo los sub-arrays que tengan numeros en comun
-        const first = result.pop() // [1,3] // 2da iteracion -> [4,6]
-        const second = stack.shift()// [4,6] --  2da - [7,9]
-        
-        if (first[first.length - 1] < second[0]) {
-            result.push(first)
-            result.push(second)
-        } else {
-            result.push([first[0], Math.max(first[first.length - 1], second[second.length - 1])]);
+  while (stack.length >= 1) {
+    // Hay que ver que tengan numeros en comun
+    // Si los tienen merge
+    // Si no los tienen, se expulsa el sub array ultimo
+    // Deben de estar solo los sub-arrays que tengan numeros en comun
+    const first = result.pop(); // [1,3] // 2da iteracion -> [4,6]
+    const second = stack.shift(); // [4,6] --  2da - [7,9]
 
-        }
+    if (first[first.length - 1] < second[0]) {
+      result.push(first);
+      result.push(second);
+    } else {
+      result.push([
+        first[0],
+        Math.max(first[first.length - 1], second[second.length - 1]),
+      ]);
     }
-    return result
+  }
+  return result;
 }
 
+mergeArray([
+  [1, 4],
+  [7, 9],
+  [2, 5],
+]);
 
-mergeArray([[1,4], [7, 9], [2, 5]])
-    
 // Dado una lista de trabajos cada uno con su tiempo de inicio, su tiempo de fin y su carga de CPU (cuando corre), encuentra el máximo de la carga del CPU en cualquier momento si todos los trabajos estan corriendo en la misma maquina:
-// trabajos: [{start:1, end:4, load:3}, {start:2, end:5, load:4}, {start:7, end:9, load:6}] --> RESULT 7 
+// trabajos: [{start:1, end:4, load:3}, {start:2, end:5, load:4}, {start:7, end:9, load:6}] --> RESULT 7
 // trabajos: [{start:6, end:7, load:10}, {start:2, end:4, load:11}, {start:8, end:12, load:15}] --> RESULT 15
-// trabajos: [{start:1, end:4, load:2}, {start:2, end:4, load:1}, {start:3, end:6, load:5}] --> RESULT 8 
+// trabajos: [{start:1, end:4, load:2}, {start:2, end:4, load:1}, {start:3, end:6, load:5}] --> RESULT 8
 
 // No programatic:
 // Firs I need to order the elements based on the start property
 // And separate the elements being prepared to be merged, that means separate the first obj to be compared with the second element
 // This means compare the first element first property with the second element in the stack end property, to know if they match on time.
-// After comparison merge if the elements match and save the accumulation of load of both process and store it 
+// After comparison merge if the elements match and save the accumulation of load of both process and store it
 // IF the elements doesn't match then they are not merged and each load is compared with the highest load value stored
 // Then the same process is repited until no elements in the array
 
@@ -75,27 +71,31 @@ mergeArray([[1,4], [7, 9], [2, 5]])
 // Inside we created two var to store the value of the elements that will be proccess and then
 // Create a comparison when we pushed in the arr preResult or mergen the elements and update the maxLoad
 
-function maximunChargeFinder(arr){
-    if(!Array.isArray(arr)) return "Must be an array"
-    const stack = arr.sort((a, b) => a.start - b.start)
-    let maxLoad = 0
-    const preResult = [stack.shift()]
-    while(stack.length >= 1){
-        const first = preResult.pop()
-        const second = stack.shift()
+function maximunChargeFinder(arr) {
+  if (!Array.isArray(arr)) return "Must be an array";
+  const stack = arr.sort((a, b) => a.start - b.start);
+  let maxLoad = 0;
+  const preResult = [stack.shift()];
+  while (stack.length >= 1) {
+    const first = preResult.pop();
+    const second = stack.shift();
 
-        if(first.end < second.start){
-            let maxTemp = Math.max(first.load, second.load)
-            maxLoad = maxLoad > maxTemp ? maxLoad : maxTemp
-            preResult.push(first)
-            preResult.push(second)
-        } else {
-            let mergedItem = {start: first.start, end: Math.max(first.end, second.end), load: first.load + second.load}
-            preResult.push(mergedItem)
-            maxLoad = maxLoad > mergedItem.load ? maxLoad : mergedItem.load
-        }
+    if (first.end < second.start) {
+      let maxTemp = Math.max(first.load, second.load);
+      maxLoad = maxLoad > maxTemp ? maxLoad : maxTemp;
+      preResult.push(first);
+      preResult.push(second);
+    } else {
+      let mergedItem = {
+        start: first.start,
+        end: Math.max(first.end, second.end),
+        load: first.load + second.load,
+      };
+      preResult.push(mergedItem);
+      maxLoad = maxLoad > mergedItem.load ? maxLoad : mergedItem.load;
     }
-    return maxLoad
+  }
+  return maxLoad;
 }
 
 // we have an array of arrays that represent the hours that works an employee and you have to find the interval of hours that employees have in common (the launch time)
@@ -103,51 +103,96 @@ function maximunChargeFinder(arr){
 // [ [[1,3], [5,6]], [[2,3], [6,8]]  ] -----> [3,5]
 // [ [1,3], [2,3], [5,6], [6,8]]
 
-function findLaunchInCommon(arr){
-    if(!Array.isArray(arr)) return "Must be an array"
-    const newflat = _.flatten(arr)
-    const stack = newflat.sort((a, b) => a[0] - b[0])
-    const mergedArr = [stack.shift()];
-    let result = []
-    let commonHrs = 0
-    while(stack.length >= 1){
-        const first = mergedArr.pop();
-        const second = stack.shift();
-        const [Astart, Aend] = first
-        const [Bstart, Bend] = second
-        if(Aend < Bstart){
-            mergedArr.push(first)
-            mergedArr.push(second)
-        } else {
-            mergedArr.push([Astart, Math.max(Aend, Bend)])
-        }
+function findLaunchInCommon(arr) {
+  if (!Array.isArray(arr)) return "Must be an array";
+  const newflat = _.flatten(arr);
+  const stack = newflat.sort((a, b) => a[0] - b[0]);
+  const mergedArr = [stack.shift()];
+  let result = [];
+  let commonHrs = 0;
+  while (stack.length >= 1) {
+    const first = mergedArr.pop();
+    const second = stack.shift();
+    const [Astart, Aend] = first;
+    const [Bstart, Bend] = second;
+    if (Aend < Bstart) {
+      mergedArr.push(first);
+      mergedArr.push(second);
+    } else {
+      mergedArr.push([Astart, Math.max(Aend, Bend)]);
     }
-    result = mergedArr.map((e, i, arr) => {
-        if(arr.length - 2){
-            let [fFirst, fLast] = e 
-            let [sFirst, sLast] = e[i+1]
-        }
-        
-    })
-    console.log(mergedArr)
-    return commonHrs
+  }
+  result = mergedArr.map((e, i, arr) => {
+    if (arr.length - 2) {
+      let [fFirst, fLast] = e;
+      let [sFirst, sLast] = e[i + 1];
+    }
+  });
+  console.log(mergedArr);
+  return commonHrs;
 }
-findLaunchInCommon([ [[1,3], [5,6]], [[2,3], [6,8]]  ])
+findLaunchInCommon([
+  [
+    [1, 3],
+    [5, 6],
+  ],
+  [
+    [2, 3],
+    [6, 8],
+  ],
+]);
 // [ [[1,3], [5,6]], [[2,3], [6,8]]  ]
 // [ [1,3], [2,3], [5,6], [6,8]]
 // in result --> 1ra Iteration -> [1,3]
 // 2da in result --> [1,3], [5,6]
 // 3ra iteration --> [[1,3], [5,8]] - [9, 10]
-// Stack is empty in 4rt iteration and 
+// Stack is empty in 4rt iteration and
+
 describe("mergeArray", () => {
-    it("mergeArray should be true", () => {
-        expect(mergeArray([[1,4], [7, 9], [2, 5]])).toStrictEqual([[1,5], [7,9]])
-        expect(mergeArray([[6,7], [2,4], [5,9]])).toStrictEqual([[2,4], [5,9]])
-    })
-    it("maximunChargeFinder should return true in all the scenarios", ()=> {
-        expect(maximunChargeFinder([{start:6, end:7, load:10}, {start:2, end:4, load:11}, {start:8, end:12, load:15}])).toBe(15)
-        expect(maximunChargeFinder([{start:1, end:4, load:3}, {start:2, end:5, load:4}, {start:7, end:9, load:6}])).toBe(7)
-        expect(maximunChargeFinder([{start:1, end:4, load:2}, {start:2, end:4, load:1}, {start:3, end:6, load:5}])).toBe(8)
-    })
-})
+  it("mergeArray should be true", () => {
+    expect(
+      mergeArray([
+        [1, 4],
+        [7, 9],
+        [2, 5],
+      ])
+    ).toStrictEqual([
+      [1, 5],
+      [7, 9],
+    ]);
+    expect(
+      mergeArray([
+        [6, 7],
+        [2, 4],
+        [5, 9],
+      ])
+    ).toStrictEqual([
+      [2, 4],
+      [5, 9],
+    ]);
+  });
+  it("maximunChargeFinder should return true in all the scenarios", () => {
+    expect(
+      maximunChargeFinder([
+        { start: 6, end: 7, load: 10 },
+        { start: 2, end: 4, load: 11 },
+        { start: 8, end: 12, load: 15 },
+      ])
+    ).toBe(15);
+    expect(
+      maximunChargeFinder([
+        { start: 1, end: 4, load: 3 },
+        { start: 2, end: 5, load: 4 },
+        { start: 7, end: 9, load: 6 },
+      ])
+    ).toBe(7);
+    expect(
+      maximunChargeFinder([
+        { start: 1, end: 4, load: 2 },
+        { start: 2, end: 4, load: 1 },
+        { start: 3, end: 6, load: 5 },
+      ])
+    ).toBe(8);
+  });
+});
 
