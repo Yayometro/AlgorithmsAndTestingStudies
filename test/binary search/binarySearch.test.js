@@ -11,42 +11,18 @@ import { describe, it, expect } from "vitest";
 
 // Pseudo code:
 /**
- *  Me piden buscar el numero 3 en un array ordenado del 1 al 5.
-    Primero tengo que tomar la mitad de mi array orginal
-        ¿Como lo hago?
-            Esto puede ser hecho por una funcion recursiva que se encarga de ir dividiendo arr y comparando el numero con el buscado, y si es retorna y si no es repite el proceso.
-            La condición sería que el arr.length no sea menor a 1 o que result sea diferente de !null osea algpun valor numerico.
-            Los pasos de esta funcion son:
-                Divido el arr, por ejemplo 5/2 y tomo el numero MENOR entre lo que me retorne 5/2 es 2.5 y lo dejo en 2
-                    Este dos lo comparo con el numero del array que busco: 2 === 3
-                        Si e slo que busco lo retorno y se acabo :)
-                        Si no es lo que busco...
-                    Parto a la mitad de mi array por lo que puedo decidir ir a la izquierda o derecha del array.
-                        Empecemos por la izquiera.
-                        En mi array de la izquierda, tengo [1,2]
-                        Vuelvo a partir el array a la mitad y tengo [1]
-                            Comparo, 1 === 3 
-                                Como ya no puedo dividir mi arr, decimos que la funcion que estaba dividiendo recursivamente, es detenida.
-            Luego inicio los mismos pasos de arriba pero con mi array de la derecha y si este tiene el resultado actualizará la variable que buscamos.
-
-
-            divideAndCompare - will take an array
-            storage it
-            start a while that will execute only if
-
-    1. Ordeno el array
-    2. creo variable de resultado
-    3. guardo la mitad del array orginial mid = mitad
-    4. Comparo mit == resultado
-        4.1 - Si true -> retorno el result
-        4.2 - Si false -> repito funcion recursiva 
-    4. izquiera = a una funcion que divida el array de forma recursiva    
-
-    Se agrega a la pila 
-    1er -> searchTheNumber([1,2,3,4,5], 3)
-    2do -> searchTheNumber([1,2], 3)
-    2do -> searchTheNumber([1], 3)
-    3ro -> se returna FALSE porque el [] ya no es divisible.
+ * Se verifica que sea un arr lo recibido
+ * Se verifica que el arr.length sea mayor a 0
+ *      Si no se retorna false
+ * Se guarda en una variable la mitad de arr.legtn / 2 redondeado
+ * Se compara si el numero dentro del array con el indice mitad es el buscado
+ *      Si lo es se retorna
+ * Si no, se compara a ver si el buscado es menor que el obtenido
+ * Si lo es, se inicia este mismo procedimiento pero del lado izquierdo
+ *      agregando a la variable de la funcion el array dividido de 0 a el mitad
+ * Si no lo es, se repite esta misma funcion pero del lado derecho,
+ *      Esto se consigue agregando como argumento el arr dividido en mid a el length
+ *          Pero como slice define automaticamente el final del arr, dejamos solo mitad
  */
 
 function binarySearchRecursive(arr, find) {
@@ -65,7 +41,19 @@ function binarySearchRecursive(arr, find) {
     return binarySearchRecursive(arr.slice(mid), find);
   }
 }
-
+/** PSUDOCODE:
+ * Al final de cuentas para que este codigo funcione primero:
+ * El array debe de estar ordenado
+ * Se crean variables de izquierda y derecha, pues estos serán los punteros
+ * Se crea ciclo while donde si izquiera es igual o mayor se detiene el cliclo
+ * Se parte el arr a la mitad
+ * Se usa esta midad como indice en el array para ver si es igual al numero buscado
+ * Si es true se retorna
+ * Si es mas pequeño find que array[mitad]
+ * Entonces se actualiza el puntero rigth a mitad - 1 -> es importante el mas uno para decirle que la motad actual no es y que se recorra un numero a la izquierda
+ * Si find > arr[mitad] -> entonces left = mitad + 1
+ * Si acaband todo el ciclo no se encuentra nada se retorna false
+ */
 function binarySearch(arr, find){
     if (!Array.isArray(arr)) return "Arr is not an array";
     let left = 0;
@@ -97,3 +85,5 @@ describe("BinarySearch", () => {
     expect(binarySearch([1,2,3,4,5], 2)).toBe(2)
   });
 });
+
+

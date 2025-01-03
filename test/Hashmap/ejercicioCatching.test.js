@@ -23,7 +23,7 @@ const createCheckerTimes10 = (t10) => {
   
   const checkerTimes10 = createCheckerTimes10(times10(5));
 
-//   console.log(checkerTimes10())
+
 
 
 describe("cache", () => {

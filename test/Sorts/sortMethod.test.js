@@ -15,6 +15,7 @@ function merge(l,r){
 function mergeSort(arr){
     if(Array.isArray(arr)){
         if(arr.length >= 1){
+            //Caso base
             if(arr.length === 1){
                 return arr
             }
@@ -22,8 +23,6 @@ function mergeSort(arr){
             let arrayLeft = arr.slice(0, m)
             let arrayRigth = arr.slice(m)
 
-            // let leftDivision = mergeSort(arrayLeft)
-            // let rightDivision = mergeSort(arrayRigth)
             return merge(mergeSort(arrayLeft), mergeSort(arrayRigth))
         } else {
             throw Error("array must have elements")
@@ -32,19 +31,29 @@ function mergeSort(arr){
         throw Error("Argument is not an array")
     }
 }
- 
-// Primero tengo una funcion arrayDivider con un arr de argumento.
-// Antes de hacer mi division, reviso que hayan length para dividirlo 
-// En caso de que si:
-// En una variable "M" -> obtengo la primera mitad de mi array dividiendo Math.floor(arr.length / 2)
-// retorno mi arrayDivider dentro de la primera.
-// Mi caso base llega cuando mi arr.length en argumento es igual a 1
-// Luego tengo que divir mi mitad l y r.
-    // l es igual arr del index 0 al m y el r es de m a arr.length 
-    //  guardo en variable leftDivision -> el arrayDivider(l) 
-    //  guardo en variable rightDivision -> el arrayDivider(r) 
-// Para hacer la recursión, mi innerFunction debe de retornarse a si misma con los argumentos innerfunction()
-// Llegados a este punto se ejecuta la funcion retornar funcion merge(leftDivider, rightDivider)
+mergeSort([9,2,4,6])
+//Se ejecuta la función mergeSort([9,2,4,6])
+// Primero verifica si el arg es un array
+//Luevo verifica que el arr tenga mas de un elemento
+// Luego verifica el primer caso base que es que si el array que entra como argumento tiene un length de 1 entonces retorne el array con ese solo argumento
+// Luego crea una variable m en donde se le aplica una division con redondeo que es la mitad del array argumento. En este caso m es igual a 2
+// Luego usando el m como medida, usamos el arrayLeft y rights para decidir sus espacios. En este caso l es de 0 a 2 y r de 2 a 4
+// Y usamos .slice() pues este metodo toma un array por el primer y ultimo index que le pongas como argumentos, con lo que obtenemos dos arrays -> l[9,2] y r[4,6]
+// Luego retorno la misma función merge con la función mergeSort como  argumentos para l y r, lo que quedaría asi: merge(mergeSort([9,2]), mergeSort([4,6]))
+// Luego vamos a ver el ejempl del mergeSort del caso de la derecha. Entra con un arr [9,2] que luego divide y queda con un leftArray = [9] y otro igual a [2] para el rigth
+// Luego se vuelve a correr una función merge() donde ahora es asi: merge(mergeSort([9]), mergeSort([2]))
+// Luego  en el caso de la izquiera, se cumple el caso base y se retorna [9]
+// Luego  en el caso de la derecha, se cumple el caso base y se retorna [2]
+// Eso nos hace regresarnos al merge(mergeSort([9]), mergeSort([2])) donde ahora es merge([9]), mergeSort([2]) y lo que hace es comparar un com otro
+// el 9 es mayor que 2, por lo tanto 2 se agrega al empty array y el 9 se deja así.
+// En la siguiente iteración ya no se cumple el ciclo while y se retorna un array [2,9] -> porque 2 estaba en el empty array, luego sigue el 9 y luego lo que siga en el right array que en este caso no es nada porque ese array estaba vacio.
+// Una vez resuelto este array regresamos al bucle suspendido de merge(mergeSort([9,2]), mergeSort([4,6])) --> 
+// donde ahora es merge([2,9]), mergeSort([4,6])) --> entonces todos los argumentos del lado de la izquierda quedaron resueltos y falta hacer lo mismo pero de la derecha.
+// Donde como sigue el mismo proceso el final resultaría merge([2,9]), [4,6])
+// Aqui seguiria el mismo concepto donde 2 se compara con 4.--> 2 se agrega al empty array[2] y queda:
+// merge([9]), [4,6]) --> donde 9 es mayor a 4  cuatro se manda al empty array. dando como resultado en la sig iteración.
+// merge([9]), [6]) --> donde 9 es mayor, se pushea el 6 al empty array[6] y se cumple el caso base:
+// merge([9]), [])  ---> se cumple el caso base y se retorna [2,4,6,9]
 
 
 

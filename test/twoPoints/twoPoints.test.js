@@ -33,8 +33,7 @@ function findPair(arr, target){
 
 //Input: [1,2,3,4,5] and target 10
 // Output: null
-
-
+// The big-notation for this alg find is log(n) --> lineal, actually les than lineal
 
 describe('findPair', () => { 
     it("twoPoints([1,2,3,4,5], 7) should return --> [2,5])", () => {

@@ -43,12 +43,11 @@ describe("", () => {
       occupation: "God of Thunder",
     };
     // Debe de simplemente contener lo descrito en el objeto. Es decir no se esperan todos los resultados.
-    expect(strongestAvenger).toMatchObject({
+	  expect(strongestAvenger).toMatchObject({
       name: "Thor Odinson",
       weapon: "Stormbreaker",
     });
-    // ta forma de hacerlo:
-
+    // Otra forma de hacerlo:
     expect(strongestAvenger).toEqual(
       expect.objectContaining({
         name: "Thor Odinson",

@@ -114,6 +114,8 @@ describe("loopIdentifier", () => {
 });
 
 
+
+// El numero que tengo es el numero de valores que voy avanzando, y tengo que ver si se hace loop o no.
 // [1,2, -1, 2,2]
 // [1,1, -1, 2,2]
 // [1,2, -1, 3,2]
@@ -121,4 +123,3 @@ describe("loopIdentifier", () => {
 // Que no vaya para atrás
 
 
-//  --> you shoud 

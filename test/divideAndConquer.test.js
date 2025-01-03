@@ -115,7 +115,7 @@ binarySearchRecursive([2,6, 7,90,103], 2)
 // se actualiza el endIndexRigth de 2 pasa a ser 4-2/2 osea 1 + 2 ---> 3
 //103 es igual al index 3 (osea 90?) --> no lo es
 //Entonces actualizo mi initial index ahora es 4 ---> esto ya cumple con las condiciones de igual a initial index o final index
-//Obviando esto. Podemos preguntar
+//Obviando esto. Podemos preguntar -- 
 //Si quiero el 2
 //En mi comparación 2 es menor a 7
 //Entonces initalIndex es ahora 2-1= 1
